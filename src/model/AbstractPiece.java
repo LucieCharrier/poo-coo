@@ -32,10 +32,9 @@ public abstract class AbstractPiece implements Pieces {
 		
 	}
 	
-	public abstract boolean isMoveOk(int xFinal, int yFinal) {
- //default
-	}
-
+	public abstract boolean isMoveOk(int xFinal, int yFinal);
+	
+	
 	@Override 
 	public java.lang.String toString(){
 		return "Nom de la pièce :" + this.nom + "\n" +
