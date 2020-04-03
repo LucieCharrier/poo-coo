@@ -13,6 +13,7 @@ public abstract class AbstractPiece implements Pieces {
 	}
 	
 	public int getX() {
+		System.out.println();
 		return this.coord.x;
 	}
 	
@@ -29,7 +30,7 @@ public abstract class AbstractPiece implements Pieces {
 	}
 	
 	public boolean capture() {
-		
+		return true;
 	}
 	
 	public abstract boolean isMoveOk(int xFinal, int yFinal);
@@ -44,8 +45,13 @@ public abstract class AbstractPiece implements Pieces {
 	}
 	
 	public static void main(String[] args) {
-		Pieces maTour = new Tour(Couleur.NOIR, new Coord(0, 0));
+		Pieces maTour = new Tour(Couleur.NOIR, new Coord(15, 20));
 		Couleur a = maTour.getCouleur();
+		int x = maTour.getX();
+		int y =maTour.getY();
 		System.out.println(a);
+		System.out.println(x);
+		System.out.println(y);
+
 	}
 }
