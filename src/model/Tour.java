@@ -10,7 +10,7 @@ public class Tour extends AbstractPiece {
 	@Override
 	public boolean isMoveOk(int xFinal, int yFinal) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

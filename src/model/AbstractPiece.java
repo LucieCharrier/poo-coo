@@ -2,9 +2,9 @@ package model;
 
 public abstract class AbstractPiece implements Pieces {
 	
-	private Couleur couleur;
-	private Coord coord;
-	private String nom;
+	protected Couleur couleur;
+	protected Coord coord;
+	protected String nom;
 	
 
 	public AbstractPiece(Couleur couleur, Coord coord) {
@@ -13,7 +13,6 @@ public abstract class AbstractPiece implements Pieces {
 	}
 	
 	public int getX() {
-		System.out.println();
 		return this.coord.x;
 	}
 	
@@ -26,10 +25,14 @@ public abstract class AbstractPiece implements Pieces {
 	}
 	
 	public boolean move(int x, int y) {
-		return false; //default
+		boolean ret = false;
+		this.coord.x = x;
+		this.coord.y = y;
+		ret = true;
+		return ret; //default
 	}
 	
-	public boolean capture() {
+	public boolean capture() { // --> la pièce sort du plateau à la position (-1,-1)
 		return true;
 	}
 	
@@ -47,6 +50,7 @@ public abstract class AbstractPiece implements Pieces {
 	public static void main(String[] args) {
 		Pieces maTour = new Tour(Couleur.NOIR, new Coord(15, 20));
 		Couleur a = maTour.getCouleur();
+		maTour.move(20,25);
 		int x = maTour.getX();
 		int y =maTour.getY();
 		System.out.println(a);
