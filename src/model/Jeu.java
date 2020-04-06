@@ -15,7 +15,8 @@ public class Jeu {
 		this.pieces = ChessPiecesFactory.newPieces(couleur);
 	}
 	
-	private boolean capture(int xCatch, int yCatch) {
+	//Ne pas coder dans la premiere iteration
+	private boolean capture(int xCatch, int yCatch) { 
 		return true;
 	}
 	
@@ -44,26 +45,55 @@ public class Jeu {
 		return true;
 	}
 	
-	private boolean isPawnPromotion(int xFinal, int yFinale) {
-		return true;
+	//A faire
+	private boolean isPawnPromotion(int xFinal, int yFinal) {
+		boolean ret = false;
+//		Pieces pawn = ;
+//		if(pawn.getY() == yFinal) {
+//			ret = true;
+//		}
+		return ret;
 	}
 	
+	//A verifier
+	private boolean pawnPromotion(int xFinal, int yFinal, String type) {
+		boolean ret = false;
+		String name = "";
+		if(isPawnPromotion(xFinal, yFinal)) {
+			name = type;
+			ret = true;
+		}
+		return ret;
+	}
+	
+	//A verifier
 	private boolean isPieceHere(int x, int y) {
-		return true;
+		boolean ret = false;
+		for(Pieces piece : pieces) {
+			if(piece.getX() == x && piece.getY() == y) {
+				ret = true;
+			}
+		}
+		return ret;
 	}
 	
+	//A verifier
 	private boolean move(int xInit, int yInit, int xFinal, int yFinal) {
-		return true;
+		boolean ret = false;
+		if(isMoveOK(xInit, yInit, xFinal, yFinal)) {
+			xInit = xFinal;
+			yInit = yFinal;
+			ret = true;
+		}
+		return ret;
 	}
-	
-	private boolean pawnPromotion(int xFinal, int yfinal, String type) {
-		return true;
-	}
+
 	
 	private void setCastling() {
 		
 	}
 	
+	//Ne pas coder dans la premiere iteration
 	private void setPossibleCapture() {
 		
 	}
