@@ -7,13 +7,12 @@ import tools.ChessPiecesFactory;
 public class Jeu {
 	
 	private Couleur couleur;
-	private List<Pieces> piecesBlanches;
-	private List<Pieces> piecesNoires;
+	private List<Pieces> pieces;
+
 	
 	public Jeu (Couleur couleur) {
 		// On crée les listes de pieces a l'aide du factory de Jeu
-		this.piecesBlanches = ChessPiecesFactory.newPieces(Couleur.BLANC);
-		this.piecesNoires = ChessPiecesFactory.newPieces(Couleur.NOIR);
+		this.pieces = ChessPiecesFactory.newPieces(couleur);
 	}
 	
 	private boolean capture(int xCatch, int yCatch) {
@@ -21,7 +20,8 @@ public class Jeu {
 	}
 	
 	private Couleur getCouleur() {
-		return null;
+		this.couleur = couleur;
+		return couleur;
 	}
 	
 	private Coord getKingCoord() {
@@ -69,7 +69,11 @@ public class Jeu {
 	}
 	
 	public String toString(){
-		return null;
+		String ret = "";
+		for(Pieces piece : pieces) {
+			ret += piece.toString();
+		}
+		return ret;
 	}
 	
 	private void undoCapture() {
@@ -78,6 +82,21 @@ public class Jeu {
 	
 	private void undoMove() {
 		
+	}
+	
+	private Pieces findPiece(int x, int y) {
+		Pieces piecefound = null;
+		for(Pieces piece : pieces) {
+			if((piece.getX()==x) && (piece.getY()==y)) {
+				piecefound = piece;
+			}
+		}
+		return piecefound;
+	}
+	
+	public static void main(String[] args) {
+		Jeu monJeu = new Jeu(Couleur.BLANC);
+		System.out.println(monJeu);
 	}
 	
 }
