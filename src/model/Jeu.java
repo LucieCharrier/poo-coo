@@ -1,5 +1,6 @@
 package model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import tools.ChessPiecesFactory;
@@ -25,24 +26,89 @@ public class Jeu {
 		return couleur;
 	}
 	
-	private Coord getKingCoord() {
-		return null;
+	private Coord getKingCoord() { 
+		Coord ret = null;
+		for(Pieces piece : pieces) {
+			if(piece.getClass().equals(Roi.class)) {
+				int x = piece.getX();
+				int y = piece.getY();
+				ret = new Coord(x,y);
+			}
+		}
+		return ret;
 	}
 	
 	private Couleur getPieceColor(int x, int y) {
-		return null;
+		Couleur couleur = null;
+		for(Pieces piece : pieces) {
+			if(piece.getX() == x && piece.getY() == y) {
+				couleur = piece.getCouleur();
+			}
+		}
+		return couleur;
 	}
 	
-	private List<PieceIHM> getPieceIHM(){
-		return null;
+	
+	public List<PieceIHM> getPiecesIHM(){
+		PieceIHM newPieceIHM = null;
+		List<PieceIHM> list = new LinkedList<PieceIHM>();
+		
+		for (Pieces piece : pieces){
+			boolean existe = false;
+			// si le type de piece existe déjà dans la liste de PieceIHM
+			// ajout des coordonnées de la pièce dans la liste de Coord de ce type
+			// si elle est toujours en jeu (x et y != -1)
+			
+			for ( PieceIHM pieceIHM : list){
+				if ((pieceIHM.getTypePiece()).equals(piece.getClass().getSimpleName())){
+					existe = true;
+					if (piece.getX() != -1){
+						pieceIHM.add(new Coord(piece.getX(), piece.getY()));
+					}
+				}
+			}
+			
+			// sinon, création d'une nouvelle PieceIHM si la pièce est toujours en jeu
+			if (! existe) {
+				if (piece.getX() != -1){
+					newPieceIHM = new PieceIHM(piece.getClass().getSimpleName(),
+							piece.getCouleur());
+					newPieceIHM.add(new Coord(piece.getX(), piece.getY()));
+					list.add(newPieceIHM);
+				}
+			}
+		}
+		return list;
 	}
+	
 	
 	private String getPieceType(int x, int y) {
-		return null;
+		String type ="";
+		for(Pieces piece : pieces) {
+			if(piece.getX() == x && piece.getY() == y) {
+				type = piece.getClass().getSimpleName();
+			}
+		}
+		return type;
 	}
 	
+	//A faire
 	private boolean isMoveOK(int xInit, int yInit, int xFinal, int yFinal) {
-		return true;
+		boolean ret = false;
+		String type = getPieceType(xInit, yInit);
+		if(type.class.isMoveOk(xFinal, yFinal)) {
+			ret = true;
+		}
+		return ret;
+		
+		Pieces mapiece = null;
+		for(Pieces piece : pieces) {
+			if(piece.getX() == xInit && piece.getY() == yInit) {
+				mapiece = piece.getClass().isMoveOk(xFinal, yFinal);
+			}
+		}
+		return mapiece;
+
 	}
 	
 	//A faire
@@ -66,7 +132,7 @@ public class Jeu {
 		return ret;
 	}
 	
-	//A verifier
+
 	private boolean isPieceHere(int x, int y) {
 		boolean ret = false;
 		for(Pieces piece : pieces) {
@@ -101,7 +167,9 @@ public class Jeu {
 	public String toString(){
 		String ret = "";
 		for(Pieces piece : pieces) {
-			ret += piece.toString();
+			if(piece.getClass().equals(Roi.class)) {
+				ret += piece.toString();
+			}
 		}
 		return ret;
 	}
