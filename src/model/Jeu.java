@@ -9,6 +9,7 @@ public class Jeu {
 	
 	private Couleur couleur;
 	private List<Pieces> pieces;
+	private boolean isRoque;
 
 	
 	public Jeu (Couleur couleur) {
@@ -92,41 +93,27 @@ public class Jeu {
 		return type;
 	}
 	
-	//A faire
+	
 	private boolean isMoveOK(int xInit, int yInit, int xFinal, int yFinal) {
-		boolean ret = false;
-		String type = getPieceType(xInit, yInit);
-		if(type.class.isMoveOk(xFinal, yFinal)) {
-			ret = true;
-		}
-		return ret;
-		
-		Pieces mapiece = null;
+		boolean ret = false;		
 		for(Pieces piece : pieces) {
 			if(piece.getX() == xInit && piece.getY() == yInit) {
-				mapiece = piece.getClass().isMoveOk(xFinal, yFinal);
+				ret = piece.isMoveOk(xFinal, yFinal);
 			}
 		}
-		return mapiece;
-
-	}
-	
-	//A faire
-	private boolean isPawnPromotion(int xFinal, int yFinal) {
-		boolean ret = false;
-//		Pieces pawn = ;
-//		if(pawn.getY() == yFinal) {
-//			ret = true;
-//		}
 		return ret;
 	}
+	
+	
+	private boolean isPawnPromotion(int xFinal, int yFinal) {
+		return yFinal == 0 || yFinal == 7;
+	}
+	
 	
 	//A verifier
 	private boolean pawnPromotion(int xFinal, int yFinal, String type) {
 		boolean ret = false;
-		String name = "";
-		if(isPawnPromotion(xFinal, yFinal)) {
-			name = type;
+		if(isPawnPromotion(xFinal, yFinal) && type.equals(Pion.class.getName())) {
 			ret = true;
 		}
 		return ret;
@@ -143,7 +130,7 @@ public class Jeu {
 		return ret;
 	}
 	
-	//A verifier
+	
 	private boolean move(int xInit, int yInit, int xFinal, int yFinal) {
 		boolean ret = false;
 		if(isMoveOK(xInit, yInit, xFinal, yFinal)) {
@@ -156,7 +143,33 @@ public class Jeu {
 
 	
 	private void setCastling() {
-		
+		this.isRoque = false;
+		Coord posRoi = getKingCoord();
+		//On rentre dans la boucle uniquement si le roi est sur sa ligne de départ
+		if((getCouleur().equals(Couleur.BLANC) && posRoi.y == 7) 
+				|| (getCouleur().equals(Couleur.NOIR) && posRoi.y == 0)) {
+			for(Pieces piece : pieces) {
+				if(piece.getClass().equals(Tour.class) && piece.getY()==posRoi.y) {
+					this.isRoque = true;
+					//Cas Tour 1
+					if(piece.getX()<posRoi.x) {
+						for(int xCase=piece.getX()+1; xCase<posRoi.x; xCase++) {
+							if(isPieceHere(xCase, posRoi.y)) {
+								this.isRoque=false;
+							}
+						}
+					}
+					//Cas Tour 2
+					else {
+						for(int xCase=piece.getX()-1; xCase>posRoi.x; xCase--) {
+							if(isPieceHere(xCase, posRoi.y)) {
+								this.isRoque=false;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	//Ne pas coder dans la premiere iteration
@@ -167,9 +180,7 @@ public class Jeu {
 	public String toString(){
 		String ret = "";
 		for(Pieces piece : pieces) {
-			if(piece.getClass().equals(Roi.class)) {
-				ret += piece.toString();
-			}
+			ret += piece.toString();
 		}
 		return ret;
 	}
