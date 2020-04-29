@@ -1,6 +1,10 @@
 package model;
 
 public class Echiquier implements BoardGames {
+	
+	private String message;
+
+
 
 	@Override
 	public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
@@ -18,6 +22,10 @@ public class Echiquier implements BoardGames {
 	public String getMessage() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private void setMessage(String message) {
+		this.message = message;
 	}
 
 	@Override

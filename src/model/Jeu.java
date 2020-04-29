@@ -109,8 +109,7 @@ public class Jeu {
 		return yFinal == 0 || yFinal == 7;
 	}
 	
-	
-	//A verifier
+
 	private boolean pawnPromotion(int xFinal, int yFinal, String type) {
 		boolean ret = false;
 		if(isPawnPromotion(xFinal, yFinal) && type.equals(Pion.class.getName())) {
