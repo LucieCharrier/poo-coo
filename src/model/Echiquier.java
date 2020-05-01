@@ -4,12 +4,25 @@ public class Echiquier implements BoardGames {
 	
 	private String message;
 
-
+	// Pas de getter si setter sur ces jeux car ils seront gérés automatiquement
+	private Jeu jeuBlanc;
+	private Jeu jeuNoir;
+	private Jeu jeuCourant;
+	
+	public Echiquier() {
+		this.jeuBlanc = new Jeu(Couleur.BLANC);
+		this.jeuNoir = new Jeu(Couleur.NOIR);
+		this.jeuCourant = this.jeuBlanc;
+	}
 
 	@Override
 	public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean ret = false;
+		if(this.isMoveOk(xInit, yInit, xFinal, yFinal)){
+			this.jeuCourant.move(xInit, yInit, xFinal, yFinal);
+			ret = true;
+		}
+		return ret;
 	}
 
 	@Override
@@ -30,14 +43,35 @@ public class Echiquier implements BoardGames {
 
 	@Override
 	public Couleur getColorCurrentPlayer() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.jeuCourant.getCouleur();
 	}
 
 	@Override
 	public Couleur getPieceColor(int x, int y) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void switchJoueur() {
+		if(getColorCurrentPlayer().equals(Couleur.BLANC)) {
+			this.jeuCourant = this.jeuNoir;
+		} else {
+			this.jeuCourant = this.jeuBlanc;
+		}
+	}
+	
+	public boolean isMoveOk(int xInit, int yInit, int xFinal, int yFinal) {
+		return this.jeuCourant.isMoveOK(xInit, yInit, xFinal, yFinal);
+	}
+
+	@Override
+	public String toString() {
+		return "Echiquier [JEU BLANC=" + jeuBlanc + ",\n JEU NOIR=" + jeuNoir + "]";
+	}
+	
+	public static void main(String[] args) {
+		Echiquier monEchiquier = new Echiquier();
+		System.out.println(monEchiquier);
 	}
 
 }

@@ -10,6 +10,28 @@ public class Jeu {
 	private Couleur couleur;
 	private List<Pieces> pieces;
 	private boolean isRoque;
+	private Move lastMove;
+	
+	private class Move {
+		
+		private int xInit;
+		private int yInit;
+		private int xFinal;
+		private int yFinal;
+		
+		public Move(int xInit, int yInit, int xFinal, int yFinal) {
+			this.xInit = xInit;
+			this.yInit = yInit;
+			this.xFinal = xFinal;
+			this.yFinal = yFinal;
+		}
+
+		@Override
+		public String toString() {
+			return "Move [xInit=" + xInit + ", yInit=" + yInit + ", xFinal=" + xFinal + ", yFinal=" + yFinal + "]";
+		}
+		
+	}
 
 	
 	public Jeu (Couleur couleur) {
@@ -18,16 +40,15 @@ public class Jeu {
 	}
 	
 	//Ne pas coder dans la premiere iteration
-	private boolean capture(int xCatch, int yCatch) { 
+	public boolean capture(int xCatch, int yCatch) { 
 		return true;
 	}
 	
-	private Couleur getCouleur() {
-		this.couleur = couleur;
+	public Couleur getCouleur() {
 		return couleur;
 	}
 	
-	private Coord getKingCoord() { 
+	public Coord getKingCoord() { 
 		Coord ret = null;
 		for(Pieces piece : pieces) {
 			if(piece.getClass().equals(Roi.class)) {
@@ -39,7 +60,7 @@ public class Jeu {
 		return ret;
 	}
 	
-	private Couleur getPieceColor(int x, int y) {
+	public Couleur getPieceColor(int x, int y) {
 		Couleur couleur = null;
 		for(Pieces piece : pieces) {
 			if(piece.getX() == x && piece.getY() == y) {
@@ -83,7 +104,7 @@ public class Jeu {
 	}
 	
 	
-	private String getPieceType(int x, int y) {
+	public String getPieceType(int x, int y) {
 		String type ="";
 		for(Pieces piece : pieces) {
 			if(piece.getX() == x && piece.getY() == y) {
@@ -94,7 +115,7 @@ public class Jeu {
 	}
 	
 	
-	private boolean isMoveOK(int xInit, int yInit, int xFinal, int yFinal) {
+	public boolean isMoveOK(int xInit, int yInit, int xFinal, int yFinal) {
 		boolean ret = false;		
 		for(Pieces piece : pieces) {
 			if(piece.getX() == xInit && piece.getY() == yInit) {
@@ -105,12 +126,12 @@ public class Jeu {
 	}
 	
 	
-	private boolean isPawnPromotion(int xFinal, int yFinal) {
+	public boolean isPawnPromotion(int xFinal, int yFinal) {
 		return yFinal == 0 || yFinal == 7;
 	}
 	
 
-	private boolean pawnPromotion(int xFinal, int yFinal, String type) {
+	public boolean pawnPromotion(int xFinal, int yFinal, String type) {
 		boolean ret = false;
 		if(isPawnPromotion(xFinal, yFinal) && type.equals(Pion.class.getName())) {
 			ret = true;
@@ -119,7 +140,7 @@ public class Jeu {
 	}
 	
 
-	private boolean isPieceHere(int x, int y) {
+	public boolean isPieceHere(int x, int y) {
 		boolean ret = false;
 		for(Pieces piece : pieces) {
 			if(piece.getX() == x && piece.getY() == y) {
@@ -130,18 +151,19 @@ public class Jeu {
 	}
 	
 	
-	private boolean move(int xInit, int yInit, int xFinal, int yFinal) {
+	public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
 		boolean ret = false;
 		if(isMoveOK(xInit, yInit, xFinal, yFinal)) {
-			xInit = xFinal;
-			yInit = yFinal;
+			Pieces currentPiece = this.findPiece(xInit, yInit);
+			currentPiece.move(xFinal, yFinal);
+			this.lastMove = new Move(xInit, yInit, xFinal, yFinal);
 			ret = true;
 		}
 		return ret;
 	}
 
 	
-	private void setCastling() {
+	public void setCastling() {
 		this.isRoque = false;
 		Coord posRoi = getKingCoord();
 		//On rentre dans la boucle uniquement si le roi est sur sa ligne de départ
@@ -172,7 +194,7 @@ public class Jeu {
 	}
 	
 	//Ne pas coder dans la premiere iteration
-	private void setPossibleCapture() {
+	public void setPossibleCapture() {
 		
 	}
 	
@@ -184,15 +206,17 @@ public class Jeu {
 		return ret;
 	}
 	
-	private void undoCapture() {
+	public void undoCapture() {
 		
 	}
 	
-	private void undoMove() {
-		
+	public void undoMove() {
+		Pieces currentPiece = this.findPiece(this.lastMove.xFinal, this.lastMove.yFinal);
+		currentPiece.move(this.lastMove.xInit, this.lastMove.yInit);
+		this.lastMove = null;
 	}
 	
-	private Pieces findPiece(int x, int y) {
+	public Pieces findPiece(int x, int y) {
 		Pieces piecefound = null;
 		for(Pieces piece : pieces) {
 			if((piece.getX()==x) && (piece.getY()==y)) {

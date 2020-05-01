@@ -5,7 +5,6 @@ public abstract class AbstractPiece implements Pieces {
 	protected Couleur couleur;
 	protected Coord coord;
 	protected String nom;
-	
 
 	public AbstractPiece(Couleur couleur, Coord coord) {
 		this.couleur = couleur;
