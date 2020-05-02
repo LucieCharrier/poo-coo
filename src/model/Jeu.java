@@ -116,10 +116,12 @@ public class Jeu {
 	
 	
 	public boolean isMoveOK(int xInit, int yInit, int xFinal, int yFinal) {
-		boolean ret = false;		
-		for(Pieces piece : pieces) {
-			if(piece.getX() == xInit && piece.getY() == yInit) {
-				ret = piece.isMoveOk(xFinal, yFinal);
+		boolean ret = false;	
+		if(isPieceHere(xInit, yInit) && (xInit!=xFinal && yInit!=yFinal)) {
+			for(Pieces piece : pieces) {
+				if(piece.getX() == xInit && piece.getY() == yInit) {
+					ret = piece.isMoveOk(xFinal, yFinal);
+				}
 			}
 		}
 		return ret;
