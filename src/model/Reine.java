@@ -10,10 +10,12 @@ public class Reine extends AbstractPiece {
 
 	@Override
 	public boolean isMoveOk(int xFinal, int yFinal) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean ret = false;
+		if(Math.abs(this.getX()-xFinal) == Math.abs(this.getY()-yFinal)
+				|| ((this.getX()!=xFinal && this.getY()==yFinal) || (this.getX()==xFinal && this.getY()!=yFinal))) {
+			ret = true;
+		}
+		return ret;
 	}
-
-
 
 }

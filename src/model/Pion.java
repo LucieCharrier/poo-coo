@@ -16,7 +16,7 @@ public class Pion extends AbstractPiece implements Pions {
 	/**
 	 * Actuellement pas de gestion du premier déplacement (Le pion ne peut pas avancer de 2)
 	 */
-	@Override //A voir comment se déplacent les pions ?
+	@Override 
 	public boolean isMoveOk(int xFinal, int yFinal) {
 		boolean ret = false;
 		if ((xFinal == this.coord.x) &&

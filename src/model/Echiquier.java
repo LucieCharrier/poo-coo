@@ -4,7 +4,7 @@ public class Echiquier implements BoardGames {
 	
 	private String message;
 
-	// Pas de getter si setter sur ces jeux car ils seront gérés automatiquement
+	// Pas de getter ni setter sur ces jeux car ils seront gérés automatiquement
 	private Jeu jeuBlanc;
 	private Jeu jeuNoir;
 	private Jeu jeuCourant;
@@ -71,7 +71,9 @@ public class Echiquier implements BoardGames {
 	
 	public static void main(String[] args) {
 		Echiquier monEchiquier = new Echiquier();
-		System.out.println(monEchiquier);
+		monEchiquier.move(0,6,0,5);
+		monEchiquier.switchJoueur();
+		monEchiquier.move(0,1,0,2);
 	}
 
 }

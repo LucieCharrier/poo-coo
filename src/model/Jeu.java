@@ -37,6 +37,7 @@ public class Jeu {
 	public Jeu (Couleur couleur) {
 		// On crée les listes de pieces a l'aide du factory de Jeu
 		this.pieces = ChessPiecesFactory.newPieces(couleur);
+		this.couleur = couleur;
 	}
 	
 	//Ne pas coder dans la premiere iteration
@@ -121,6 +122,9 @@ public class Jeu {
 			for(Pieces piece : pieces) {
 				if(piece.getX() == xInit && piece.getY() == yInit) {
 					ret = piece.isMoveOk(xFinal, yFinal);
+					if(piece.getClass()!=Cavalier.class) {
+						
+					}
 				}
 			}
 		}
@@ -159,6 +163,7 @@ public class Jeu {
 			Pieces currentPiece = this.findPiece(xInit, yInit);
 			currentPiece.move(xFinal, yFinal);
 			this.lastMove = new Move(xInit, yInit, xFinal, yFinal);
+			System.out.println(currentPiece);
 			ret = true;
 		}
 		return ret;

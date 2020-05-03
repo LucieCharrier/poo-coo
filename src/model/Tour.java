@@ -9,9 +9,10 @@ public class Tour extends AbstractPiece {
 
 	@Override
 	public boolean isMoveOk(int xFinal, int yFinal) {
-		boolean ret = true;
-		if(this.getX()!=xFinal && this.getY()!=yFinal) {
-			ret = false;
+		boolean ret = false;
+		if((this.getX()!=xFinal && this.getY()==yFinal)
+				|| (this.getX()==xFinal && this.getY()!=yFinal)){
+			ret = true;
 		}
 		return ret;
 	}

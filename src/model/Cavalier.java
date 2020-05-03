@@ -10,8 +10,12 @@ public class Cavalier extends AbstractPiece {
 
 	@Override
 	public boolean isMoveOk(int xFinal, int yFinal) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean ret = false;
+		if((Math.abs(this.getX()-xFinal)==1 && Math.abs(this.getY()-yFinal)==2)
+			|| (Math.abs(this.getX()-xFinal)==2 && Math.abs(this.getY()-yFinal)==1)) {
+			ret = true;
+		}
+		return ret;
 	}
 
 
