@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Echiquier implements BoardGames {
 	
 	private String message;
@@ -58,6 +60,10 @@ public class Echiquier implements BoardGames {
 		} else {
 			this.jeuCourant = this.jeuBlanc;
 		}
+	}
+	
+	public ArrayList<PieceIHM> getPiecesIHM(){
+		return (ArrayList<PieceIHM>) jeuCourant.getPiecesIHM();
 	}
 	
 	public boolean isMoveOk(int xInit, int yInit, int xFinal, int yFinal) {
